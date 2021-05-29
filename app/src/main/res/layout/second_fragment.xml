@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <CalendarView
+        android:id="@+id/cv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:background="@drawable/background_blue_corner_8"
+        android:paddingEnd="@dimen/size_32"
+        android:paddingStart="@dimen/size_32"
+        android:paddingTop="@dimen/size_8"
+        android:paddingBottom="@dimen/size_8"
+        app:layout_constraintTop_toBottomOf="@id/cv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/white"
+        android:id="@+id/tvAddList"
+        android:textAlignment="center"
+        android:text="Add List"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvList"
+        android:layout_marginTop="@dimen/size_16"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <TextView
+        android:textSize="@dimen/text_20"
+        android:layout_marginTop="@dimen/size_16"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddList"
+        android:textAlignment="center"
+        android:text="No Event"
+        android:id="@+id/tvNoData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/clAddList"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/ivCLose"
+        android:src="@drawable/ic_baseline_close_24"
+        android:layout_margin="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"/>
+    <LinearLayout
+        android:layout_margin="@dimen/size_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textStyle="bold"
+            android:textSize="@dimen/text_24"
+            android:text="What you want to do today?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_marginTop="@dimen/size_24"
+            android:textAlignment="center"
+            android:hint="Event"
+            android:text="test"
+            android:padding="@dimen/size_8"
+            android:background="@drawable/background_white_corner_8_border_blue"
+            android:id="@+id/etEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TimePicker
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"/>
+        <TextView
+            android:layout_marginTop="@dimen/size_16"
+            android:id="@+id/tvSubmit"
+            android:textColor="@color/white"
+            android:background="@drawable/background_blue_corner_8"
+            android:paddingEnd="@dimen/size_32"
+            android:paddingStart="@dimen/size_32"
+            android:paddingTop="@dimen/size_8"
+            android:paddingBottom="@dimen/size_8"
+            android:layout_gravity="center_horizontal"
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
