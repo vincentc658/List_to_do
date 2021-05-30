@@ -63,22 +63,30 @@ class MainActivity : AppCompatActivity() {
             realmControllerEvent.insertEvent(
                 "Olahraga Sepak bola",
                 TimeConverter.getTime("2021-06-01 08:30:31"),
-                "Budi"
+                "Bawa Perlengkapan sendiri",
+                "Budi",
+                false
             ) {}
             realmControllerEvent.insertEvent(
                 "Main Musik Bareng",
                 TimeConverter.getTime("2021-06-02 13:00:00"),
-                "Andi"
+                "-",
+                "Andi",
+                false
             ) {}
             realmControllerEvent.insertEvent(
                 "Makan Siang Perusahaan",
                 TimeConverter.getTime("2021-06-04 12:30:31"),
-                "Jessica"
+                "Diharapkan Tepat Waktu",
+                "Jessica",
+                false
             ) {}
             realmControllerEvent.insertEvent(
                 "Reuni Sekolah",
                 TimeConverter.getTime("2021-06-03 18:30:31"),
-                "Toni"
+                "-",
+                "Toni",
+                false
             ) {}
         }
 

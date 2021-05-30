@@ -11,7 +11,7 @@ class RealmControllerEvent : RealmController<EventModelRealm>(EventModelRealm::c
 
     fun insertEvent(
         event: String
-    , time : Long, name : String?,  done: ()-> Unit
+    , time : Long, name : String?,subNote: String?,attent : Boolean,   done: ()-> Unit
     ) {
         val connector = object : InterfaceTransaction {
             override fun errorTransaction(throwable: Throwable) {}
@@ -20,8 +20,14 @@ class RealmControllerEvent : RealmController<EventModelRealm>(EventModelRealm::c
                 val start = time ?: System.currentTimeMillis()
                 val eventModel = realm.createObject(EventModelRealm::class.java,start)
                 eventModel.note = event
+                eventModel.attend= attent
                 if(name!= null){
                     eventModel.name = name
+                }
+                if(subNote.isNullOrEmpty()){
+                    eventModel.subNote = "-"
+                }else{
+                    eventModel.subNote = subNote
                 }
                 realm.insertOrUpdate(eventModel)
             }
@@ -36,10 +42,41 @@ class RealmControllerEvent : RealmController<EventModelRealm>(EventModelRealm::c
         executeDataAsync(connector)
     }
     fun getEvent(): RealmResults<EventModelRealm> =
-        getDataQueryGlobal().findAll()
+        getDataQueryGlobal().equalTo("attend", true).findAll()
 
     fun getTimeLineEvent(): RealmResults<EventModelRealm> =
         getDataQueryGlobal().isNotNull("name").findAll()
 
+    fun deleteEvent(time: Long, done: ()-> Unit) {
+        val connector = object : InterfaceTransaction {
+            override fun errorTransaction(throwable: Throwable) {}
+            override fun successTransaction() {
+                done()
+            }
+            override fun executeTransaction(realm: Realm) {
+                val event =
+                    realm.where(EventModelRealm::class.java).equalTo("time", time).findFirst()
+                event?.deleteFromRealm()
+            }
+        }
+        executeDataAsync(connector)
+    }
+     fun updateDataEvent(
+        time: Long,attend: Boolean,  done: ()-> Unit
+    ) {
+        val connector = object : InterfaceTransaction {
+            override fun errorTransaction(throwable: Throwable) {}
+            override fun successTransaction() {
+                done()
+            }
+            override fun executeTransaction(realm: Realm) {
+                val event =
+                    realm.where(EventModelRealm::class.java).equalTo("time", time).findFirst()
+                event?.attend= attend
+                realm.insertOrUpdate(event)
 
+            }
+        }
+        executeDataAsync(connector)
+    }
 }

@@ -9,6 +9,8 @@ open class EventModelRealm : RealmObject(), BaseRecylerViewModel {
     @PrimaryKey
     var time: Long? = null
     var note: String ? = null
+    var subNote: String ? = null
     var name: String? = null
+    var attend : Boolean?= false
     override fun getIdentifier(): Int? = GenericAdapter.ITEM
 }

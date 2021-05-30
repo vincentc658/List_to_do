@@ -61,7 +61,7 @@ class SecondActivity : AppCompatActivity() {
                     time =TimeConverter.getDate(System.currentTimeMillis(), TimeConverter.HH_MM)+":${TimeConverter.getDate(System.currentTimeMillis(), TimeConverter.SS)}"
                 }
                 val eventTime = TimeConverter.getTime("$date $time")
-                realmControllerEvent.insertEvent(binding.iClAddList.etEvent.text.toString(), eventTime, null){
+                realmControllerEvent.insertEvent(binding.iClAddList.etEvent.text.toString(), eventTime, null,binding.iClAddList.etSubNote.text.toString(), true ){
                     setAlarm(eventTime)
                     binding.backgroundBlack.visibility = View.GONE
                     bottomShareView.state = BottomSheetBehavior.STATE_HIDDEN

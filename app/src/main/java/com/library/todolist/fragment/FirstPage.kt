@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.library.todolist.R
-import com.library.todolist.SecondActivity
-import com.library.todolist.TimeConverter
-import com.library.todolist.ViewUtility
+import com.library.todolist.*
 import com.library.todolist.adapter.EventListAdapter
 import com.library.todolist.adapter.GenericAdapter
 import com.library.todolist.databinding.FirstFragmentBinding
@@ -20,8 +17,9 @@ import com.library.todolist.realm.RealmControllerEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FirstPage : Fragment() {
+class FirstPage : Fragment(), OnDeleteEventListener {
     private var _binding: FirstFragmentBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -29,10 +27,17 @@ class FirstPage : Fragment() {
     private val eventListAdapter: GenericAdapter<EventModelRealm> by lazy {
         GenericAdapter<EventModelRealm>(
             EventListAdapter(
-                requireActivity()
+                requireActivity(), this
             )
         )
     }
+
+    override fun onDelete(time: Long, isTimeLineEvent : Boolean) {
+        realmControllerEvent.deleteEvent(time){
+            filterDate()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,16 +54,17 @@ class FirstPage : Fragment() {
         binding.rvList.adapter = eventListAdapter
         binding.tvAddList.setOnClickListener {
             val time = Calendar.getInstance().time
-            val formatter =  SimpleDateFormat(TimeConverter.YYYY_MM_DD)
+            val formatter = SimpleDateFormat(TimeConverter.YYYY_MM_DD)
             val formatedDate = formatter.format(time)
             (requireActivity() as SecondActivity).showPopUpAddList(formatedDate, 1)
         }
 
         filterDate()
     }
+
     private fun filterDate() {
         val time = Calendar.getInstance().time
-        val formatter =  SimpleDateFormat(TimeConverter.YYYY_MM_DD)
+        val formatter = SimpleDateFormat(TimeConverter.YYYY_MM_DD)
         val date = formatter.format(time)
         val data = realmControllerEvent.getEvent()
         val filteredEvent = ArrayList<EventModelRealm>()
@@ -69,10 +75,10 @@ class FirstPage : Fragment() {
         }
         eventListAdapter.clearData()
         eventListAdapter.addAll(filteredEvent)
-        if(filteredEvent.isEmpty()){
-            binding.tvNoData.visibility= View.VISIBLE
-        }else{
-            binding.tvNoData.visibility= View.GONE
+        if (filteredEvent.isEmpty()) {
+            binding.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData.visibility = View.GONE
         }
     }
 
@@ -85,7 +91,8 @@ class FirstPage : Fragment() {
         super.onResume()
         filterDate()
     }
-    fun refresh(){
+
+    fun refresh() {
         filterDate()
     }
 }

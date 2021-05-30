@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.library.todolist.OnDeleteEventListener
 import com.library.todolist.SecondActivity
 import com.library.todolist.TimeConverter
 import com.library.todolist.adapter.EventListAdapter
@@ -17,7 +18,7 @@ import com.library.todolist.realm.RealmControllerEvent
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SecondPage : Fragment() {
+class SecondPage : Fragment(), OnDeleteEventListener {
     private var _binding: SecondFragmentBinding? = null
     private var date: String? = null
 
@@ -28,9 +29,29 @@ class SecondPage : Fragment() {
     private val eventListAdapter: GenericAdapter<EventModelRealm> by lazy {
         GenericAdapter<EventModelRealm>(
             EventListAdapter(
-                requireActivity()
+                requireActivity(), this
             )
         )
+    }
+
+    override fun onDelete(time: Long, isTimeLineEvent : Boolean) {
+        if(isTimeLineEvent){
+            realmControllerEvent.updateDataEvent(time, false){
+                if (date == null) {
+                    filterDate(TimeConverter.getDate(binding.cv.date, TimeConverter.YYYY_MM_DD))
+                } else {
+                    filterDate(date!!)
+                }
+            }
+        }else {
+            realmControllerEvent.deleteEvent(time) {
+                if (date == null) {
+                    filterDate(TimeConverter.getDate(binding.cv.date, TimeConverter.YYYY_MM_DD))
+                } else {
+                    filterDate(date!!)
+                }
+            }
+        }
     }
 
     override fun onCreateView(
